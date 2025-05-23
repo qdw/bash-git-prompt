@@ -136,6 +136,18 @@ GIT_PROMPT_ONLY_IN_REPO=1
 # GIT_PROMPT_START=...    # uncomment for custom prompt start sequence
 # GIT_PROMPT_END=...      # uncomment for custom prompt end sequence
 
+# Make the displayed branch shorter by lopping this number of characters off of the start of it.
+# This takes effect before GIT_PROMPT_BRANCH_OFFSET, which variable is described immediately below.
+# Note that setting this number too high can result in an empty branch name.
+# GIT_PROMPT_BRANCH_OFFSET=4 # just an example
+
+# Make the displayed branch shorter by truncating it after this many chars.
+# If GIT_PROMPT_BRANCH_OFFSET is set, that number is first lopped off the start,
+# and the resulting, foreshortened branch name is cut off after GIT_PROMPT_BRANCH_LIMIT chars.
+# If GIT_PROMPT_BRANCH_OFFSET is not set, then GIT_PROMPT_BRANCH_LIMIT just counts from the
+# start of the true branch name.
+# GIT_PROMPT_BRANCH_LIMIT=24 # just an example
+
 # as last entry source the gitprompt script
 # GIT_PROMPT_THEME=Custom # use custom theme specified in file GIT_PROMPT_THEME_FILE (default ~/.git-prompt-colors.sh)
 # GIT_PROMPT_THEME_FILE=~/.git-prompt-colors.sh

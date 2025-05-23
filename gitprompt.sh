@@ -561,6 +561,18 @@ function updatePrompt() {
     unset GIT_REMOTE_USERNAME_REPO
   fi
 
+  # If the user has exported GIT_PROMPT_BRANCH_OFFSET and/or
+  # GIT_PROMPT_BRANCH_LIMIT in their interactive shell,
+  # then lop that many characters off of, respectively,
+  # the start and end of the branch name.
+  BRANCH_SHORT="$GIT_BRANCH"
+  if [[ "$GIT_PROMPT_BRANCH_OFFSET" ]]; then
+      BRANCH_SHORT="${BRANCH_SHORT:$GIT_PROMPT_BRANCH_OFFSET}"
+  fi
+
+  if [[ "$GIT_PROMPT_BRANCH_LIMIT" ]]; then
+      BRANCH_SHORT="${BRANCH_SHORT:0:$GIT_PROMPT_BRANCH_LIMIT}"
+  fi
   local GIT_FORMATTED_UPSTREAM
   local GIT_UPSTREAM_PRIVATE="${git_status_fields[@]:3:1}"
   if [[ "${__GIT_PROMPT_SHOW_UPSTREAM:-0}" != "1" || "^" == "${GIT_UPSTREAM_PRIVATE}" ]]; then
@@ -591,7 +603,7 @@ function updatePrompt() {
     fi
 
     local BRANCH_PREFIX="$(get_branch_prefix $GIT_BRANCH $GIT_DETACHED_HEAD)"
-    local STATUS_PREFIX="${PROMPT_LEADING_SPACE}${GIT_PROMPT_PREFIX_FINAL}${BRANCH_PREFIX}\${GIT_BRANCH}${ResetColor}${GIT_FORMATTED_UPSTREAM}"
+    local STATUS_PREFIX="${PROMPT_LEADING_SPACE}${GIT_PROMPT_PREFIX_FINAL}${BRANCH_PREFIX}\${BRANCH_SHORT}${ResetColor}${GIT_FORMATTED_UPSTREAM}"
     local STATUS=""
 
     # __add_status KIND VALEXPR INSERT
